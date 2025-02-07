@@ -7,37 +7,28 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import CounterC from './components/CounterC'
+import CounterF from './components/CounterF'
+import ListManager from './components/ListManager'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <Header />
-      <main className="container">
-        <div>
-          <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
+    <div className="container-fluid py-4">
+      <div className="row">
+        <div className="col-12">
+          <Header />
+          <CounterC counter={10}/>
+          <CounterF initialCount={0} step={1}/>
+          <ListManager 
+            initialItems={['React', 'Angular', 'VueJs']} 
+            placeholder="Entrez un nouveau framework..."
+          />
+          <Footer />
         </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </div>
   )
 }
 
