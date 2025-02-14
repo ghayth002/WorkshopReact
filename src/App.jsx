@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -15,8 +14,6 @@ import GradeManager from './components/GradeManager'
 import TodoList from './components/TodoList'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="container-fluid py-4">
       <div className="row">
