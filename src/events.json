@@ -1,0 +1,31 @@
+{
+    "events": [
+        {
+            "id": 1,
+            "name": "Formation React JS",
+            "description": "Formation théorique et pratique sur React JS avec des exercices",
+            "img": "event1.jpg",
+            "price": 150,
+            "nbTickets": 20,
+            "nbParticipants": 0
+        },
+        {
+            "id": 2,
+            "name": "Workshop Angular",
+            "description": "Workshop pratique sur Angular avec des projets concrets",
+            "img": "event2.jpg",
+            "price": 200,
+            "nbTickets": 15,
+            "nbParticipants": 0
+        },
+        {
+            "id": 3,
+            "name": "Formation Node.js",
+            "description": "Formation complète sur Node.js et Express",
+            "img": "event3.jpg",
+            "price": 180,
+            "nbTickets": 25,
+            "nbParticipants": 0
+        }
+    ]
+}

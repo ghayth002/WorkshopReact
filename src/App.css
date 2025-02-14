@@ -1,3 +1,5 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -33,8 +35,25 @@
   }
 }
 
+.App {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
 .card {
   padding: 2em;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
 
 .read-the-docs {

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Events from './components/Events'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 import CounterC from './components/CounterC'
 import CounterF from './components/CounterF'
@@ -22,6 +22,7 @@ function App() {
       <div className="row">
         <div className="col-12">
           <Header />
+          <Events />
           <ColorBox 
             initialColor="#FF5733"
             colorOptions={['#FF5733', '#33FF57', '#3357FF', '#F033FF', '#33FFF0', '#FFB833']}
