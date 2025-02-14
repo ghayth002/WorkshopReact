@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Alert } from 'react-bootstrap';
 
 function Event({ name, description, price, nbTickets: initialTickets, nbParticipants: initialParticipants, img }) {
@@ -6,24 +6,68 @@ function Event({ name, description, price, nbTickets: initialTickets, nbParticip
     const [nbParticipants, setNbParticipants] = useState(initialParticipants);
     const [like, setLike] = useState(false);
     const [showBookingMessage, setShowBookingMessage] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const [sparklePosition, setSparklePosition] = useState({ x: 0, y: 0 });
+    const [showSparkle, setShowSparkle] = useState(false);
+
+    useEffect(() => {
+        if (showBookingMessage) {
+            setTimeout(() => {
+                setShowBookingMessage(false);
+            }, 2000);
+        }
+    }, [showBookingMessage]);
 
     const handleBooking = () => {
         if (nbTickets > 0) {
             setNbTickets(prev => prev - 1);
             setNbParticipants(prev => prev + 1);
             setShowBookingMessage(true);
-            setTimeout(() => {
-                setShowBookingMessage(false);
-            }, 2000);
+            
+            // Trigger confetti effect
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti-container';
+            document.body.appendChild(confetti);
+            setTimeout(() => document.body.removeChild(confetti), 2000);
         }
     };
 
     const handleLike = () => {
         setLike(!like);
+        if (!like) {
+            // Create heart burst effect
+            const burst = document.createElement('div');
+            burst.className = 'heart-burst';
+            document.body.appendChild(burst);
+            setTimeout(() => document.body.removeChild(burst), 1000);
+        }
+    };
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        setSparklePosition({ x, y });
+        setShowSparkle(true);
+        setTimeout(() => setShowSparkle(false), 200);
     };
 
     return (
-        <Card className="event-card">
+        <Card 
+            className={`event-card ${isHovered ? 'hovered' : ''}`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onMouseMove={handleMouseMove}
+        >
+            {showSparkle && (
+                <div 
+                    className="sparkle"
+                    style={{
+                        left: sparklePosition.x,
+                        top: sparklePosition.y
+                    }}
+                />
+            )}
             <div className="event-image-container">
                 <Card.Img 
                     variant="top" 
@@ -36,20 +80,20 @@ function Event({ name, description, price, nbTickets: initialTickets, nbParticip
                 />
                 <div className="event-overlay">
                     <div className="event-overlay-content">
-                        <h3>{name}</h3>
+                        <h3 className="glow-text">{name}</h3>
                         <p>{description}</p>
                     </div>
                 </div>
                 {like && (
-                    <div className="like-badge">
+                    <div className="like-badge pulse">
                         <i className="bi bi-heart-fill"></i>
                     </div>
                 )}
             </div>
             
-            <Card.Body>
+            <Card.Body className="card-content">
                 <Card.Title className="event-title">
-                    {name}
+                    <span className="title-text">{name}</span>
                     <Button 
                         variant="link"
                         onClick={handleLike}
@@ -60,21 +104,21 @@ function Event({ name, description, price, nbTickets: initialTickets, nbParticip
                 </Card.Title>
                 
                 <div className="event-details">
-                    <div className="detail-item">
+                    <div className="detail-item shine-effect">
                         <span className="detail-label">
                             <i className="bi bi-tag-fill"></i> Prix
                         </span>
                         <span className="detail-value price">{price} DT</span>
                     </div>
-                    <div className="detail-item">
+                    <div className="detail-item shine-effect">
                         <span className="detail-label">
                             <i className="bi bi-ticket-perforated-fill"></i> Tickets
                         </span>
-                        <span className="detail-value tickets" data-available={nbTickets > 0}>
+                        <span className={`detail-value tickets ${nbTickets === 0 ? 'sold-out' : ''}`} data-available={nbTickets > 0}>
                             {nbTickets}
                         </span>
                     </div>
-                    <div className="detail-item">
+                    <div className="detail-item shine-effect">
                         <span className="detail-label">
                             <i className="bi bi-people-fill"></i> Participants
                         </span>
@@ -93,7 +137,7 @@ function Event({ name, description, price, nbTickets: initialTickets, nbParticip
                     variant="primary"
                     onClick={handleBooking}
                     disabled={nbTickets === 0}
-                    className="book-button"
+                    className={`book-button ${nbTickets === 0 ? 'sold-out' : ''}`}
                 >
                     <i className="bi bi-calendar-check me-2"></i>
                     {nbTickets > 0 ? "Réserver maintenant" : "Complet"}
